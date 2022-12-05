@@ -56,21 +56,17 @@ public class ProductServiceController {
     
     //Method tambah data
     @RequestMapping(value = "/products", method = RequestMethod.POST)
-    public ResponseEntity<Object> createProduct(@RequestBody Product product){
-        //Kondisi ID sudah ada ketika data ditambah
-        if(productRepo.containsKey(product.getId())){
-            return new ResponseEntity<>("ID Product is already exist", HttpStatus.OK);
+      public ResponseEntity<Object> createProduct(@RequestBody Product product){
+        //Kondisi ID telah ada yang mengisi
+        if(productRepo.containsKey(product.getId())){ 
+            return new ResponseEntity<>("ID is already fill", HttpStatus.OK); 
         }
-        //KOndisi ID kosong ketika tambah data
-       else if(!productRepo.containsKey(product.getId())){ 
-            return new ResponseEntity<>("Id Product should be fill", HttpStatus.OK); 
-        } 
-      //kondisi jika success/berhasil meng create data
-      else{
+        //Kondisi ID telah ditambahkan
+        else{
             productRepo.put(product.getId(), product);
             return new ResponseEntity<>("Product is created successfully", HttpStatus.CREATED);
-        }
-    }
+        }    
+   }
     
     @RequestMapping(value = "/products")
     public ResponseEntity<Object> getProduct() {
